@@ -1,5 +1,7 @@
 package chickenKiller;
 
+import java.util.concurrent.TimeUnit;
+
 import org.powerbot.script.rt4.*;
 
 
@@ -14,14 +16,21 @@ public class Kill extends Task<ClientContext> {
 	public boolean activate() {
 		
 
-		return !ctx.objects.select().id(chickenID).isEmpty();
+		return !ctx.npcs.select().id(chickenID).isEmpty() && !ctx.players.local().inCombat();
 	}
 
 	@Override
 	public void execute() {
 		Npc chicken = ctx.npcs.nearest().poll();
-		if (chicken.inViewport()) {
+		if(chicken.inCombat()){
+		}
+		else if (chicken.inViewport()) {
 			chicken.interact("Attack");
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+
+			}
 		} else {
 			ctx.camera.turnTo(chicken);
 			ctx.movement.step(chicken);
