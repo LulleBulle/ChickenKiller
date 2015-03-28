@@ -15,7 +15,6 @@ public class Kill extends Task<ClientContext> {
 	@Override
 	public boolean activate() {
 		
-
 		return !ctx.npcs.select().id(chickenID).isEmpty() && !ctx.players.local().inCombat();
 	}
 
@@ -23,13 +22,24 @@ public class Kill extends Task<ClientContext> {
 	public void execute() {
 		Npc chicken = ctx.npcs.nearest().poll();
 		if(chicken.inCombat()){
+			return;
 		}
 		else if (chicken.inViewport()) {
 			chicken.interact("Attack");
-			try {
-				TimeUnit.SECONDS.sleep(2);
-			} catch (InterruptedException e) {
+			while(ctx.players.local().inMotion()){
+				
+				try {
+					TimeUnit.MILLISECONDS.sleep(20);
+				} catch (InterruptedException e) {
+					
+				}
+			}
+			while(chicken.inCombat()){
+				try {
+					TimeUnit.MILLISECONDS.sleep(200);
+				} catch (InterruptedException e) {
 
+				}
 			}
 		} else {
 			ctx.camera.turnTo(chicken);
