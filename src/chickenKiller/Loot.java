@@ -1,5 +1,6 @@
 package chickenKiller;
 import java.util.concurrent.TimeUnit;
+
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GroundItem;
 
@@ -17,10 +18,13 @@ public class Loot extends Task<ClientContext> {
 		GroundItem feather = ctx.groundItems.nearest().poll();
 		if (feather.inViewport()) {
 			feather.interact("Take");
-			try {
-				TimeUnit.SECONDS.sleep(2);
-			} catch (InterruptedException e) {
+			while(ctx.players.local().inMotion()){
+				try {
+					TimeUnit.MILLISECONDS.sleep(200);
+				} catch (InterruptedException e) {
 
+				}
+				
 			}
 		} else {
 			ctx.camera.turnTo(feather);

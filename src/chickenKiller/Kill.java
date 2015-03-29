@@ -20,6 +20,10 @@ public class Kill extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
+		if(ctx.movement.energyLevel() > 30){
+			ctx.movement.running(true);
+			
+		}
 		Npc chicken = ctx.npcs.nearest().poll();
 		if(chicken.inCombat()){
 			return;
@@ -34,7 +38,7 @@ public class Kill extends Task<ClientContext> {
 					
 				}
 			}
-			while(chicken.inCombat()){
+			while(chicken.inCombat() && ctx.players.local().inCombat() && chicken.health() != 0){
 				try {
 					TimeUnit.MILLISECONDS.sleep(200);
 				} catch (InterruptedException e) {
