@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.powerbot.script.rt4.*;
 
 public class DropCrap extends Task<ClientContext> {
-	private int[] craps = { 526, 2138 };
+	private int[] craps = { 526, 2138, 1351 };
 
 	public DropCrap(ClientContext ctx) {
 		super(ctx);

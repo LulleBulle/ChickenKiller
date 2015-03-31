@@ -30,25 +30,27 @@ public class Kill extends Task<ClientContext> {
 		}
 		else if (chicken.inViewport()) {
 			chicken.interact("Attack");
-			while(ctx.players.local().inMotion()){
-				
-				try {
-					TimeUnit.MILLISECONDS.sleep(20);
-				} catch (InterruptedException e) {
-					
-				}
+			sleep(2000);
+
+			while(ctx.players.local().inMotion()){		
+				sleep(200);
 			}
 			while(chicken.inCombat() && ctx.players.local().inCombat() && chicken.health() != 0){
-				try {
-					TimeUnit.MILLISECONDS.sleep(200);
-				} catch (InterruptedException e) {
-
-				}
+				sleep(200);
 			}
 		} else {
 			ctx.camera.turnTo(chicken);
 			ctx.movement.step(chicken);
 		}
 	}
+	
+	public void sleep(int time){
+		try {
+			TimeUnit.MILLISECONDS.sleep(time);
+		} catch (InterruptedException e) {
+			
+		}
+	}
+	}
 
-}
+

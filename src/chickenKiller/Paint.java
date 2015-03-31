@@ -32,6 +32,8 @@ public class Paint implements MessageListener {
 	private int feathersGained;
 	private int strLvls;
 	private int hpLvls;
+	private double sXpG;
+	private double hXpG;
 
 	public Paint(ClientContext ctx) {
 		this.ctx = ctx;
@@ -52,6 +54,8 @@ public class Paint implements MessageListener {
 		currentHP = ctx.skills.experience(Skills.HITPOINTS) - hpXpStart;
 		currentStr = ctx.skills.experience(Skills.STRENGTH) - strXpStart;
 		feathersGained = ctx.inventory.id(314).count(true) - startFeathers;
+		sXpG = currentStr/runtimeHours;
+		hXpG = currentHP/runtimeHours;
 	}
 
 	public void repaint(Graphics2D g) {
@@ -65,10 +69,10 @@ public class Paint implements MessageListener {
 		g.drawString("Runtime: " + hours + ":" + minutes + ":" + seconds, 10,
 				400);
 		g.drawString("Strength xp gained: " + currentStr, 10, 415);
-		g.drawString("Strength levels gained: " + strLvls, 180, 415);
+		g.drawString("Strength xp/hour: " + Math.round(sXpG), 180, 415);
 		g.drawString("Hitpoint xp gained: " + currentHP, 10, 430);
-		g.drawString("Hitpoint levels gained: " + hpLvls, 180, 430);
-		g.drawString("Feathers gained: " + feathersGained, 10, 445);
+		g.drawString("Hitpoints xp/hour: " + Math.round(hXpG), 180, 430);
+	//	g.drawString("Feathers gained: " + feathersGained, 10, 445);
 
 	}
 
